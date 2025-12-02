@@ -11,7 +11,6 @@ const classAssignmentSchema = new mongoose.Schema({
     ref: 'Class',
     required: true,
   },
-
   assignedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -37,8 +36,11 @@ const classAssignmentSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// Compound index to prevent duplicate assignments
-classAssignmentSchema.index({ student: 1, class: 1 }, { unique: true });
+// Compound partial index: prevent duplicates only if status is 'active'
+classAssignmentSchema.index(
+  { student: 1, class: 1, status: 1 },
+  { unique: true, partialFilterExpression: { status: 'active' } }
+);
 
 const ClassAssignment = mongoose.model('ClassAssignment', classAssignmentSchema);
 module.exports = ClassAssignment;

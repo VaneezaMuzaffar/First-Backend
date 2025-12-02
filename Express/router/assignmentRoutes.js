@@ -11,7 +11,7 @@ const {
 const router = express.Router();
 
 // Assignment Routes
-router.post('/', assignClassToStudent);
+router.post('/assign', assignClassToStudent);
 router.get('/', getAllAssignments);
 router.get('/stats', getAssignmentStats);
 router.get('/student/:studentId', getStudentAssignments);
